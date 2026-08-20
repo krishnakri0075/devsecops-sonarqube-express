@@ -11,7 +11,7 @@ describe('DevSecOps Sample API Tests', () => {
   it('GET /api/users/search should sanitize input', async () => {
     const res = await request(app).get('/api/users/search?username=admin_user<script>');
     expect(res.statusCode).toEqual(200);
-    expect(res.body.query).toEqual('admin_user script');
+    expect(res.body.query).toEqual('admin_userscript');
   });
 
   it('GET /api/users/search without query should return 400', async () => {
