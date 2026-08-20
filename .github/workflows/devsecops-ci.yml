@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-analyze:
-    name: Build, Test, and SonarQube SAST Scan
+    name: Build, Test, and SonarCloud SAST Scan
     runs-on: ubuntu-latest
 
     steps:
@@ -29,15 +29,8 @@ jobs:
       - name: Run Unit Tests & Generate Coverage
         run: npm test
 
-      - name: SonarQube SAST Scan
-        uses: SonarSource/sonarqube-scan-action@v3.0.0
+      - name: SonarCloud SAST Scan & Quality Gate
+        uses: SonarSource/sonarcloud-github-action@v3.1.0
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: "https://sonarcloud.io"
-
-      - name: SonarQube Quality Gate Check
-        uses: SonarSource/sonarqube-quality-gate-action@v1.1.0
-        timeout-minutes: 5
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: "https://sonarcloud.io"
